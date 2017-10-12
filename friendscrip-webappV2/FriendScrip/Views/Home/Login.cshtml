@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@*<head>
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+        .loginHeader {
+            text-align:center;
+        }
+        .regLogin {
+            position:absolute;
+            right:680px;
+        }
+        .fbLogin {
+            position:absolute;
+            right:600px;
+        }
+    </style>
+</head>*@
+@*<h1 class="loginHeader">login</h1>*@
+@*<body>*@
+
+<link rel="stylesheet" type="text/css" href="~/Content/Login.css" />
+
+    <script>
+        var name = "";
+        var email = "";
+        var uid = "";
+
+
+        // Initializes facebook login sdk
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1764814027164453',
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Javascript login button, will display a message saying connected
+        // when the user signs in with facebook
+        // In progress, but it will re-direct the user to the homepage
+        function login() {
+
+            FB.login(function (response) {
+
+                if (response.status === 'connected') {
+                    uid = response.authResponse.userID;
+
+                    FB.api('/me', { locale: 'en_US', fields: 'name, email' },
+                        function (response) {
+                            name = response.name;
+                            email = response.email;
+                            var success = tryAddAccount();
+
+                            if (success) {
+                                alert("Praise the lord Harambe!");
+                            }
+                        }
+                    );
+                    //document.getElementById('status').innerHTML = 'connected';
+                    //window.location = "http://localhost:52526/Home/Index";
+                }
+                else if (response.status === 'not_authorized') {
+                    document.getElementById('status').innerHTML = 'not connected';
+                }
+            }, { scope: 'email' });
+        }
+
+        function tryAddAccount() {
+            var newAccountObject = {
+                ID: uid,
+                Name: name,
+                Email: email,
+                Friendscrip: 10,
+                IsAdmin: false,
+            };
+
+            //alert(name + " - " + email + " - " + uid);
+
+            // ajax call to add account
+            $.ajax({
+                url: '../Data/AddAccount'/*?test=FUCK*/,
+                //contentType: "application/json",
+                dataType: "json",
+                type: "POST",
+                data: { 'accountInfo': newAccountObject },
+            }).done(function (data) {
+                if (data == "AlreadyInDB") {
+                    window.location.href = "../Home/Index";
+                    return true;
+                } else {
+                    window.location.href = "../Home/Confirm?Email=" + data.Email + "&ID=" + data.ID;
+                }
+                return false;
+            });
+        }
+
+
+    </script>
+    <div class="col-lg-12">
+        <div id="status"></div>
+        <div class="jumbotron">
+            <h1><img src="~/Content/showsAppZoomed.png" style="height:100%;width:100%;display:inline-block" /></h1>
+            <p>Use ShowsUp to end the stress of noshows when selling items.</p>
+        </div>
+        <button type="button" onclick="login()" class="btn btn-primary btn-lg btn-block">Sign in with Facebook</button>
+
+    </div>
+    <!--
+    the Facebook style of button is implemented like this, but has issues with functionality
+        <fb:login-button onclick="login()">Login</fb:login-button>
+        <button class="regLogin" onclick="login()">Login</button>
+        <body background="~/Content/ken.jpg" style="background-repeat:no-repeat; background-size:cover">
+    -->
+    @*</body>*@
+

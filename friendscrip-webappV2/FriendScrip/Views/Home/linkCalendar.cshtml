@@ -1,0 +1,311 @@
+﻿
+@{
+    ViewBag.Title = "linkCalendar";
+}
+<head>
+    <style>
+        body {
+            background-color: aliceblue;
+            padding-top: 100px;
+        }
+
+        .row {
+            color: black;
+            background-color: gainsboro;
+            border-radius: 25px;
+            padding: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding-top: 100px;
+            width: 50%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: grey;
+            margin: auto;
+            padding: 0;
+            border: 1px solid black;
+            width: 80%;
+        }
+
+        .close {
+            color: red;
+            float: right;
+            font-size: 30px;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                cursor: pointer;
+            }
+
+        .modal-header {
+            padding: 5px 5px;
+            background-color: green;
+            color: black;
+        }
+
+        .modal-body {
+            padding: 2px 16px;
+        }
+
+        .modal-footer {
+            padding: 10px 10px;
+            background-color: green;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <p id="p">tester</p>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeMyModal()">&times;</span>
+                <h2 style="font-weight:100;text-align:center">Create Event</h2>
+            </div>
+            <div class="modal-body">
+                <p>Title of Event: </p>
+                <input type="text" id="eventName" size="35" />
+
+                <p>Length of Event (Hours) (Note: default=30min): </p>
+                <input type="text" id="eventLength" size="35" />
+                <p>Event Colour: </p>
+                <input type="text" id="eventColour" size="35" />
+                <button style="border-radius:4px;background-color:black;color:aliceblue" id="createBtn">Create</button>
+            </div>
+            <div class="modal-footer">
+                <button style="border-radius:4px;background-color:black;color:aliceblue;float:left">Accept</button>
+                <button style="border-radius:4px;background-color:black;color:aliceblue;float:left">Counter</button>
+                <button style="border-radius:4px;background-color:black;color:aliceblue;float:left">Decline</button>
+                <img src="~/Content/FS-logo3_26.jpg" align="right" />
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeEditModal()">&times;</span>
+                <h2 style="font-weight:100;text-align:center">Edit Event</h2>
+            </div>
+            <div class="modal-body">
+                <p>Event Title:</p>
+                <input type="text" id="editEventName" size="35" />
+                <p>Event Start Time: (Ex. Monday, 24 Apr 2017 13:15:00 EST)</p>
+                <input type="text" id="editEventStart" size="35" />
+
+                <p>Event End Time:</p>
+                <input type="text" id="editEventEnd" size="35" />
+                <p>Event Colour:</p>
+                <input type="text" id="editEventColour" size="35" />
+                <button style="border-radius:4px;background-color:black;color:aliceblue" id="updateBtn">Update Event</button>
+                <button style="border-radius:4px;background-color:black;color:aliceblue" id="delBtn">Delete Event</button>
+            </div>
+            <div class="modal-footer">
+                <img src="~/Content/FS-logo3_26.jpg" align="right" />
+            </div>
+        </div>
+    </div>
+    <div class="row" id="calendar"></div>
+
+</body>
+
+@section scripts{
+    <script type="text/javascript">
+        function closeMyModal() {
+            $('#myModal').modal('hide');
+        };
+
+        function closeEditModal() {
+            $('#editModal').modal('hide');
+        };
+        $(document).ready(function () {
+
+            //'Wed, 12 Apr 2017 13:15:00 EST'
+
+            $('#calendar').fullCalendar({
+                //monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                //    'August', 'September', 'October', 'November', 'December'],
+                //dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                //titleFormat: {
+                //    month: 'MMMM YYYY',
+                //    week: 'MMM D YYYY',
+                //    day: 'MMMM D YYYY'
+                //},
+                theme: true,
+                header: {
+                    left: 'prev, next today',
+                    center: 'title',
+                    right: 'month, agendaWeek, agendaDay'
+                },
+                //select: function () {
+                //    var modal = document.getElementById('myModal');
+                //    $('#myModal').modal('show');
+                //    $('#eventName').focus();
+
+                //var newEvent = {
+                //    title: document.getElementById('eventName').value,
+                //    start: document.getElementById('eventStart').value,
+                //    end: document.getElementById('eventEnd').value,
+                //    color: document.getElementById('eventColour').value,
+                //}
+                //$('#myModal').modal('show');
+                //var newEvent = {
+                //   title: prompt("Name of event: "),
+                //   start: prompt('Enter start date (eg. Mon, 24 Apr 2017 13:30:00 EST) : '),
+                //   end: prompt('Enter end date (eg. Mon, 23 Apr 2017 15:30:00 EST) : '),
+                //   color: prompt("Enter color: "),
+                //}
+                //$('#calendar').fullCalendar('renderEvent', newEvent, true);
+                //},
+
+
+                select: function (start, end, jsEvent, view) {
+                    $('#myModal').modal('show');
+                    $('#eventName').focus();
+                    document.getElementById('createBtn').onclick = function () {
+                        var eventName = document.getElementById('eventName').value;
+                        var eventLength = document.getElementById('eventLength').value;
+                        var eventColour = document.getElementById('eventColour').value;
+                        eventLength = parseInt(eventLength);
+                        //var end1 = new Date(start);
+                        //end1.setHours(end1.getHours() - 20);
+                        //end1.setHours(end1.getHours() + eventLength);
+                        //end1.setHours(end1.getHours() + 2);
+                        //var allDay = !start.hasTime && !end.hasTime;
+                        //end.add(eventLength, 'hours');
+                        var newEvent = new Object();
+                        newEvent.title = eventName;
+                        //newEvent.start = moment(start).format();
+                        newEvent.start = start;
+                        newEvent.end = end;
+                        newEvent.color = eventColour;
+                        newEvent.allDay = false;
+                        //end: 'Wed, 10 May 2017 08:00:00',
+                        $('#calendar').fullCalendar('renderEvent', newEvent, true);
+                        $('#myModal').modal('hide');
+                        document.getElementById('eventName').value = '';
+                        document.getElementById('eventLength').value = '';
+                        document.getElementById('eventColour').value = '';
+                    }
+                },
+
+                eventClick: function (calEvent) {
+                    //var modal2 = document.getElementById("editModal");
+                    $('#editModal').modal('show');
+                    $('#editEventName').focus();
+                    document.getElementById('editEventName').value = calEvent.title;
+                    document.getElementById('editEventStart').value = calEvent.start;
+                    document.getElementById('editEventEnd').value = calEvent.end;
+                    document.getElementById('editEventColour').value = calEvent.color;
+
+                    var updateBtn = $('#editModal #updateBtn');
+                    updateBtn.click(function () {
+                        //calEvent.color = document.getElementById('editEventColour').value;
+                        //calEvent.start = document.getElementById('editEventStart').value;
+                        $('#calendar').fullCalendar('removeEvents', calEvent._id);
+                        var updatedEvent = {
+                            title: $('#editModal #editEventName').val(),
+                            start: $('#editModal #editEventStart').val(),
+                            end: $('#editModal #editEventEnd').val(),
+                            color: $('#editModal #editEventColour').val(),
+                        }
+
+                        $('#calendar').fullCalendar('renderEvent', updatedEvent, true);
+                        //$('#calendar').fullCalendar('updateEvent', calEvent);
+                        $('#editModal').modal('hide');
+                        var updateEvent = null;
+                        document.getElementById('editEventName').value = '';
+                        document.getElementById('editEventStart').value = '';
+                        document.getElementById('editEventEnd').value = '';
+                        document.getElementById('editEventColour').value = '';
+                    });
+                    var deleteBtn = $('#editModal #delBtn');
+                    deleteBtn.click(function () {
+                        $('#calendar').fullCalendar('removeEvents', calEvent._id);
+                        $('#editModal').modal('hide');
+                    });
+
+                },
+
+                //eventRender: function (event, element) {
+                //    //element.append("<span class='closeon'>X</span>");
+                //    element.find(".ui.icon-close").click(function () {
+                //        $('#calendar').fullCalendar('removeEvents', event._id);
+                //    });
+                //},
+
+
+                //titleFormat: {
+                //     month: 'MMMM yyyy',
+                //week: 'MMMM D yyyy',
+                //day: 'MMMM D yyyy'
+                //},
+
+                //timeFormat: {
+                //    agenda: '',
+                //    '': 'H:mm{ -H:mm}'
+                //},
+
+                //columnFormat: {
+                //    month: 'dddd',
+                //    week: 'dddd, MMM dS',
+                //    day:'dddd, MMM dS'
+                //},
+                eventDurationEditable: true,
+                forceEventDuration: true,
+                duration: '00:30:00',
+                defaultView: 'agendaWeek',
+                editable: true,
+                selectable: true,
+                allDaySlot: false,
+                color: 'black',
+                axisFormat: 'H:mm',
+                firstHour: 6,
+
+                slotMinutes: 15,
+                //events:
+                //[
+                //   {
+                //       title: 'Bi-weekly Meeting',
+                //      start: '2017-04-09',
+                //       color: 'red'
+                //   }
+                //]
+                //events: "/home/getevents"
+
+            });
+
+            //$('#calendar').fullCalendar('renderEvent', newEvent, true);
+
+        });
+        //function f() {
+            //var modal = document.getElementById('myModal');
+            //$('#myModal').modal('hide');
+
+        //    var newEvent1 = {
+        //        title: $('#myModal #eventName').val(),
+        //        start: $('#myModal #eventStart').val(),
+        //        end: $('#myModal #eventEnd').val(),
+        //        color: $('#myModal #eventColour').val(),
+        //    }
+        //    $('#calendar').fullCalendar('renderEvent', newEvent1, true);
+        //    $('#myModal').modal('hide');
+        //};
+
+        /*function d(calEvent) {
+            $('#calendar').fullCalendar('removeEvents', calEvent._id);
+        };*/
+    </script>
+}

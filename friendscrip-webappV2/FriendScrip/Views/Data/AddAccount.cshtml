@@ -1,0 +1,19 @@
+﻿@model FriendScrip.Models.Friendscrip_Accounts
+
+<h2>AddAccount</h2>
+
+@{
+    Html.BeginForm();
+
+    @Html.LabelFor(Model => Model.FirstName)
+    @Html.TextBoxFor(Model => Model.FirstName)
+
+    @Html.LabelFor(Model => Model.LastName)
+    @Html.TextBoxFor(Model => Model.LastName)
+
+    @Html.LabelFor(Model => Model.Email)
+    @Html.TextBoxFor(Model => Model.Email)
+
+    <input type="submit" value="Submit"/>
+
+}

@@ -1,0 +1,50 @@
+﻿@model FriendScrip.Models.ConfirmEmail
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="">
+    <h1 class="cover-heading">Confirm your email.</h1>
+    <p class="lead"></p> 
+
+    @*<div class="lead" style="margin:0 auto;">
+        <form class="form-horizontal">
+            <div class="form-group">
+                    <input type="email" class="form-control" id="email" placeholder="Your email">
+            </div>
+            <div class="form-group">
+                    <input type="email" class="form-control" id="pwd" placeholder="Confirm email">
+            </div>
+        </form>
+    </div>*@
+    
+    <div class="lead" style="margin:0 auto;">
+        @using (Html.BeginForm("Confirm", "Home"))
+        {
+            <div class="form-group">
+                @Html.TextBoxFor(Model => Model.Email, new { Class="form-control", placeholder="Your Email", required="required"})
+            </div>
+
+            <div class="form-group">
+                @Html.TextBoxFor(Model => Model.SameEmail, new { Class = "form-control", placeholder = "Confirm Email", required = "required" })
+            </div>
+
+            <p>
+                Your email is required for us to complete transactions. <br />
+                Your email will not be shared with other members.
+            </p>
+            <p class="lead">
+                <input value="Submit" type="submit" class="btn btn-lg btn-primary" />
+            </p>
+
+        }
+        @*<form class="form-horizontal">
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Your email">
+            </div>
+            
+        </form>*@
+    </div>
+
+    
+</div>

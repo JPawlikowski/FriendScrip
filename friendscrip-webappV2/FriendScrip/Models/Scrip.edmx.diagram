@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4e1c5b3d0a794d2dab4fee7d0a8a88c2" Name="Diagram1">
+        <EntityTypeShape EntityType="ScripModel.Friendscrip_Accounts" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="ScripModel.Friendscrip_Items" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="ScripModel.FK_Friendscrip_Items_Friendscrip_Accounts" />
+        <EntityTypeShape EntityType="ScripModel.Friendscrip_Meetups" Width="1.5" PointX="5.25" PointY="0.875" />
+        <AssociationConnector Association="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Accounts" />
+        <AssociationConnector Association="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Items" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

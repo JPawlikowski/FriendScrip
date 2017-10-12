@@ -1,0 +1,427 @@
+﻿@*<script type="text/javascript" src="~/Scripts/DataTables/jQuery-2.2.4/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.min.css" />*@
+<link href="~/Content/NewItems.css" type="text/css" rel="stylesheet"/>
+@*<script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>*@
+@*<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>*@
+
+<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+
+
+@{
+    ViewBag.Title = "NewItems";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>NewItems</h2>
+
+<div id="tableArea" >
+    <table id="itemTable" class="display" cellspacing="0" width="113%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mark As Sold</th>
+                <th>Edit</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="aboutItem">
+    <h3 id="itemNameDescrip">Your Item</h3>
+    <h2 id="noticeText">Copy the below into your facebook ad!</h2>
+    <div class="adContent">
+        <p class="itemProperty">Condition: </p>
+        <b id="itemConditionDescrip" class="itemVal"></b>
+        <p></p>
+        <p class="itemProperty">Nearest Intersection: </p>
+        <b id="itemMainIntersectDescrip" class="itemVal"></b>
+        <p></p>
+        <p class="itemProperty">Item Description: </p>
+        <b id="itemDescriptionShow" class="itemVal"></b>
+        <p></p>
+        <a @*href="/Home/LoginCalendar"*@ style="font-size:22px;margin-left:2%" id="calendarLink"> Click Here to Book a Time in my Calendar </a>
+    </div>
+    <div class="waitlist">
+        <h3 style="text-align:center;font-size:26px;text-decoration:underline;margin-top:0.5%">Waitlist</h3>
+        <textarea style="min-width:98%;height:45%;margin-left:1%"></textarea>
+        <button class="btn" style="width:98%;height:25%;background-color:grey;margin-left:1%;font-size:18px">Send Waitlist Email</button>
+    </div>
+</div>
+
+<!-- Confirm Remove Item Modal -->
+<div class="modal fade" id="removeItemModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this item?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmDelete" class="btn btn-success" data-dismiss="modal" data-target="#removeItemModal">Confirm</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-target="#removeItemModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="itemModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" @*onclick="closeModal()"*@ data-dismiss="modal" data-target="#itemModal">&times;</button>
+                <h4 class="modal-title">Create Item</h4>
+            </div>
+            <div class="modal-body">
+                <p class="modalObjects">Enter Name of Item:</p>
+                <input type="text" id="itemName" style="min-width:100%" />
+                <p class="modalObjects" style="padding-top:1%;">Enter Condition: (eg. poor, good, mint)</p>
+                <input type="text" id="itemC" style="min-width:100%" />
+                <p class="modalObjects" style="padding-top:1%;">Enter Pickup Location:</p>
+                <input type="text" id="location" style="min-width:100%" />
+                <p class="modalObjects" style="padding-top:1%;">Nearest Main Intesection of Pickup Location</p>
+                <input type="text" id="mainIntersect" style="min-width:100%" />
+                <p class="modalObjects" style="padding-top:1%;">Enter Description of Item:</p>
+                <textarea id="itemDescription" style="min-width:100%;height:20%"></textarea>
+                <p> </p>
+                <button onclick="AddItem()" class="btn" style="width:100%;background-color:darkgray;font-size:16px">Create Item</button>
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="editItemModalClose()">&times;</button>
+                <h4 class="modal-title">Edit Item</h4>
+            </div>
+            <div class="modal-body">
+                <p class="modalObjects">Enter Name of Item:</p>
+                <input type="text" id="edittedItemName" style="min-width:100%" />
+                <!--<p class="modalObjects">Enter Price of Item:</p>-->
+                <!--<input type="text" id="itemPrice" style="width:100%" class="modalObjects"/>-->
+                <p class="modalObjects">Enter Condition: (eg. poor,good,mint)</p>
+                <input type="text" id="edittedItemC" style="min-width:100%" />
+                <p class="modalObjects">Enter Pickup Location:</p>
+                <input type="text" id="edittedLocation" style="min-width:100%" />
+                <p class="ModalObjects">Nearest Main Intesection of Pickup Location</p>
+                <input type="text" id="edittedMainIntersect" style="min-width:100%" />
+                <p class="modalObjects">Enter Description of Item:</p>
+                <textarea id="edittedItemDescription" style="min-width:100%;height:20%"></textarea>
+                <p> </p>
+                <button onclick="updateItem()" class="btn" id="updateItemBtn" style="width:100%;background-color:darkgrey">Update Item</button>
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var uid = '@Session["ID"]';
+    var itemBeingEditedID = null;
+    var itemTable = null;
+    //$('#itemTable').DataTable();
+
+    itemTable = $('#itemTable').DataTable({
+        data: [],
+        dom: 'Bfrtip',
+        select: {
+            style: 'single',
+            info: true,
+        },
+        columns: [
+            { "data": "ItemName" },
+            { "data": null },
+            { "data": null },
+        ],
+        columnDefs: [
+            {
+                "aTargets": [1],
+                "className": '',
+                "mData": null,
+                "mRender": function (data) {
+                    //data.ID
+                    return "<button id='' type='button' class='btn btn-default' aria-label='View Details' onclick='deleteItem(this)'>Mark As Sold</button>";
+                }
+            }, {
+                "aTargets": [2],
+                "mData": null,
+                "mRender": function () {
+                    return "<button id='viewDetailsButton' type='button' class='btn btn-default' aria-label='View Details' onclick='EditItem(this)'>\
+                        <span id='viewDetailsIcon' class='glyphicon glyphicon-list' aria-hidden='true'></span>\
+                    </button>";
+                }
+            }
+        ],
+        buttons: [
+            {
+                text: 'Add',
+                className: 'btn btn-primary',
+                action: function (e, dt, node, config) {
+                    $('#itemModal').modal().fadeIn('slow');
+                    $('#itemModal').on('shown.bs.modal', function () {
+                        $('#itemName').focus();
+                    });
+                }
+            }
+        ]
+    });
+
+    $('.dt-button').removeClass('dt-button');
+
+    itemTable.on('select', function (e, dt, type, indexes) {
+        if (type === 'row') {
+            var data = itemTable.rows({ selected: true }).data();
+            var row = itemTable.rows({ selected: true });
+            var rowData = data[0];
+          
+            var itemName = rowData.ItemName;
+            var itemC = rowData.Condition;
+            var mainIntersect = rowData.MainIntersection;
+            var itemDescrip = rowData.Description;
+            itemBeingEditedID = rowData.ID;
+            
+            document.getElementById("itemNameDescrip").innerHTML = itemName;
+            document.getElementById("itemConditionDescrip").innerHTML = itemC;
+            document.getElementById('itemMainIntersectDescrip').innerHTML = mainIntersect;
+            document.getElementById("itemDescriptionShow").innerHTML = itemDescrip;
+            document.getElementById('calendarLink').innerHTML = 'KenGoDaddy/Home/Index/iid=' + itemBeingEditedID + 'uid=' + uid;
+        }
+    });
+    reloadTable();
+    function reloadTable() {
+        $.ajax({
+            url: "../Data/GetItems?uid=" + uid,
+            dataType: "json",
+            type: "GET",
+        }).done(function (data) {
+            itemTable.clear();
+            itemTable.rows.add(data);
+            itemTable.draw();
+        });
+    }
+
+    function viewItem(item) {
+        var tr = $(item).parents('tr');
+        var row = itemTable.row(tr);
+        var rowData = row.data();
+
+        var itemName = rowData.ItemName;
+        var itemC = rowData.ItemCondition;
+        var mainIntersect = rowData.MainIntersection;
+        var itemDescrip = rowData.Description;
+        itemBeingEditedID = rowData.ID;
+        document.getElementById("itemNameDescrip").innerHTML = itemName;
+        document.getElementById("itemConditionDescrip").innerHTML = itemC;
+        document.getElementById('itemMainIntersectDescrip').innerHTML = mainIntersect;
+        document.getElementById("itemDescriptionShow").innerHTML = itemDescrip;
+        document.getElementById('calendarLink').innerHTML = 'KenGoDaddy/Home/Index/iid=' + itemBeingEditedID + 'uid=' + uid;
+    }
+
+    function deleteItem(item) {
+        var tr = $(item).parents('tr');
+        var row = itemTable.row(tr);
+        var rowData = row.data();
+
+        $('#removeItemModal').modal().fadeIn('slow');
+        document.getElementById('confirmDelete').addEventListener('click', function () { MarkAsSold(item) });
+    }
+
+    function MarkAsSold(item) {
+        var tr = $(item).parents('tr');
+        var row = itemTable.row(tr);
+        var rowData = row.data();
+
+        var ItemName = rowData.ItemName;
+        var ItemCondition = rowData.Condition;
+        var Location = rowData.PickupLocation;
+        var MainIntersect = rowData.MainIntersection;
+        var ItemDescription = rowData.Description;
+        itemBeingEditedID = rowData.ID;
+
+        var ItemObject = {
+            AccountId: uid,
+            ID: itemBeingEditedID,
+            ItemName: ItemName,
+            Condition: ItemCondition,
+            PickupLocation: Location,
+            MainIntersection: MainIntersect,
+            Description: ItemDescription,
+        };
+
+        $.ajax({
+            url: '../Data/RemoveItem',
+            dataType: "json",
+            type: "POST",
+            data: { 'item': ItemObject },
+        }).done(function (data) {
+            if (data != "Failure") {
+                reloadTable();
+            }
+        }).always(function () {
+            });
+
+        document.getElementById("itemNameDescrip").innerHTML = "Your Item";
+        document.getElementById("itemConditionDescrip").innerHTML = "";
+        document.getElementById('itemMainIntersectDescrip').innerHTML = "";
+        document.getElementById("itemDescriptionShow").innerHTML = "";
+        document.getElementById('calendarLink').innerHTML = 'Click Here to Book a Time in my Calendar';
+    }
+
+    function EditItem(item) {
+        var tr = $(item).parents('tr'); // get row element of current item
+        var row = itemTable.row(tr); // get row object from datatable
+        var rowData = row.data(); // get data from row object
+
+        editItemModal();
+        //get identifier of button, num corresponds with id of item
+        //display the edit modal with values corresponding to selected item
+        var oldItemName = rowData.ItemName;
+        var oldItemCondition = rowData.Condition;
+        var oldLocation = rowData.PickupLocation;
+        var oldMainIntersect = rowData.MainIntersection;
+        var oldItemDescription = rowData.Description;
+        document.getElementById('edittedItemName').value = oldItemName;
+        document.getElementById('edittedItemC').value = oldItemCondition;
+        document.getElementById('edittedLocation').value = oldLocation;
+        document.getElementById('edittedMainIntersect').value = oldMainIntersect;
+        document.getElementById('edittedItemDescription').value = oldItemDescription;
+    }
+
+    function updateItem() {
+        //update properties of item from edit modal text boxes
+        var newItemName = document.getElementById('edittedItemName').value;
+        var newItemCondition = document.getElementById('edittedItemC').value;
+        var newLocation = document.getElementById('edittedLocation').value;
+        var newMainIntersect = document.getElementById('edittedMainIntersect').value;
+        var newItemDescription = document.getElementById('edittedItemDescription').value;
+
+        var updatedItemObject = {
+            AccountId: uid,
+            ID: itemBeingEditedID,
+            ItemName: newItemName,
+            Condition: newItemCondition,
+            PickupLocation: newLocation,
+            MainIntersection: newMainIntersect,
+            Description: newItemDescription,
+        };
+
+        $.ajax({
+            url: '../Data/EditItem',
+            dataType: "json",
+            type: "POST",
+            data: { 'updatedItem': updatedItemObject },
+        }).done(function (data) {
+            if (data != "Failure") {
+                reloadTable();
+            }
+        }).always(function () {
+            $('#itemModal').modal().fadeOut('fast');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+        editItemModalClose();
+
+        //item information displayed after item updated
+        document.getElementById("itemNameDescrip").innerHTML = newItemName;
+        document.getElementById("itemConditionDescrip").innerHTML = newItemCondition;
+        document.getElementById('itemMainIntersectDescrip').innerHTML = newMainIntersect;
+        document.getElementById("itemDescriptionShow").innerHTML = newItemDescription;
+        document.getElementById('calendarLink').innerHTML = 'KenGoDaddy/Home/Index/iid=' + itemBeingEditedID + 'uid=' + uid;
+    }
+
+    function AddItem() {
+        //get properties of item from modal textboxes
+        var itemName = document.getElementById("itemName").value;
+        var itemC = document.getElementById("itemC").value;
+        var itemLocation = document.getElementById("location").value;
+        var itemMainIntersect = document.getElementById("mainIntersect").value;
+        var itemD = document.getElementById("itemDescription").value;
+
+        var itemModel = {
+            AccountID: uid,
+            ItemName: itemName,
+            Condition: itemC,
+            PickupLocation: itemLocation,
+            MainIntersection: itemMainIntersect,
+            Description: itemD,
+        };
+        
+        $.ajax({
+            url: '../Data/AddNewItem',
+            dataType: "json",
+            type: "POST",
+            data: { 'newItem': itemModel },
+        }).done(function (data) {
+            if (data != "Failure") {
+                reloadTable();
+            }
+        }).always(function () {
+            $('#itemModal').modal().fadeOut('fast');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            });
+
+        //item information displayed after item created
+        document.getElementById("itemNameDescrip").innerHTML = itemName;
+        document.getElementById("itemConditionDescrip").innerHTML = itemC;
+        document.getElementById('itemMainIntersectDescrip').innerHTML = itemMainIntersect;
+        document.getElementById("itemDescriptionShow").innerHTML = itemD;
+        document.getElementById('calendarLink').innerHTML = 'KenGoDaddy/Home/Index/iid=' + itemBeingEditedID + 'uid=' + uid;
+    }
+
+    function editItemModal() {
+        $('#editModal').modal('show');
+        $('#editModal').on('shown.bs.modal', function () {
+            $('#edittedItemName').focus();
+        })
+    }
+
+    function editItemModalClose() {
+        $('#editModal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    }
+
+    //$(document).ready(function () {
+    //    //$('#itemTable').DataTable({
+    //    //    ajax: "../Data/GetItems?UID="+uid,
+    //    //    columns: [
+    //    //        { data: "ItemName" },
+    //    //        { data: null },
+    //    //        { data: null },
+    //    //    ]
+    //    //});
+
+    //    $('#itemTable').DataTable({
+    //        "data": [],
+    //        "columns": [
+    //            { "data": "ItemName" },
+    //        ]
+    //    });
+    //});
+</script>

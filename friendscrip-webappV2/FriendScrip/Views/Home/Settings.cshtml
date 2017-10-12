@@ -1,0 +1,25 @@
+﻿@model FriendScrip.Models.Friendscrip_Accounts
+
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Account Settings</h2> 
+
+@{
+    Html.BeginForm();
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.Name, new { Class ="" })
+        @Html.TextBoxFor(Model => Model.Name, new { Class = "form-control" })
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(Model => Model.Email, new { Class = "" })
+        @Html.TextBoxFor(Model => Model.Email, new { Class = "form-control" })
+    </div>
+    
+
+    <input type="submit" value="Save Changes" class="btn btn-success" />
+
+}

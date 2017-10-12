@@ -1,0 +1,375 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            padding-top: 6%;
+            background-color: darkgrey;
+        }
+
+        .row {
+            position: absolute;
+            top: 11%;
+            left: 1%;
+            right: 1%;
+            color: black;
+            background-color: aliceblue;
+            border: solid;
+            margin-left: 0.5%;
+            margin-right: 0.5%;
+            margin-top: 1%;
+            padding-left: 1%;
+            padding-right: 1%;
+            padding-top: 1%;
+            padding-bottom: 1%;
+            border-radius: 5px;
+        }
+
+        .modal-body {
+            background-color: lightgrey;
+        }
+
+        .modal-header {
+            text-align: center;
+            font-size: 26px;
+            background-color: #0B9444;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .modal-footer {
+            background-color: #0B9444;
+            -webkit-border-bottom-left-radius: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            -moz-border-radius-bottomright: 5px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .modal-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 28px;
+        }
+
+        #offerText {
+            float: left;
+            margin-right: 5px;
+            margin-right: 5px;
+            margin-top: 5px;
+            margin-left: 30%;
+            font-size: 16px;
+            font-family: 'PT Sans, sans-serif';
+        }
+
+        #modalText {
+            font-size: 20px;
+            text-align: center;
+            font-family: 'PT Sans, sans-serif';
+        }
+
+        #createBtn {
+            width: 100%;
+            background-color: grey;
+        }
+
+        .btn {
+            font-family: 'PT Sans, sans-serif';
+            background-color: lightgrey;
+        }
+        .btn:hover,
+        .btn:focus {
+            background-color: darkgrey;
+         }
+        #cancelText {
+            display: inline;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'PT Sans, sans-serif';
+        }
+        #showUpText {
+            text-align: center;
+            font-size:20px;
+            font-family: 'PT Sans, sans-serif';
+            display:inline;
+        }
+        #aboutMeetingTime {
+            font-size: 20px;
+            text-align: center;
+        }
+        #cancelConfirm {
+            min-width: 100%;
+            height: 20%;
+            background-color: grey;
+            font-size: 18px;
+        }
+        #claimFR {
+            width: 100%;
+            background-color: grey;
+        }
+        input[type=checkbox] {
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body>    
+    <div class="modal fade" id="eventModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="closeModal()">&times;</button>
+                    <h4 class="modal-title">Confirm Event</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modalText"></p>
+                    <p id="offerText">$ Offer for Item: </p>
+                    <input type="text" id="eventPriceOffer" size="15" />
+                    <button id="createBtn" class="btn">Confirm</button>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="friendscripModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="closefrModal()">&times;</button>
+                    <h4 class="modal-title">Did the Meeting Not Go as Planned?</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="showUpText">Did the buyer not show up?</p>
+                    <input type="checkbox" style="margin-left:15px;display:inline"/>
+                    <p></p>
+                    <p >What happened that makes you think the buyer should not recieve their friendscrip back?</p>
+                    <textarea style="min-width:100%" id="frReason"></textarea>
+                    <button class="btn" id="claimFR">*Claim Friendscrip</button>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="cancelModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="closeCancelModal()">&times;</button>
+                    <h4 class="modal-title">Cancel Meeting</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="aboutMeetingTime"></p>
+                    <p id="cancelText" >Would you like to cancel this meeting? (Doing so ahead of time will refund both parties their friendscrip, cancelling a meeting is irreversible)</p>
+                    <input type="checkbox" style="display:inline;margin-left:15px" id="cancelBox"/>
+                    <button class="btn" id="cancelConfirm">Confirm Cancel</button>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" id="calendar"></div>
+</body>
+
+@section scripts{
+    <script type="text/javascript">
+
+        //for loading in events documentation!!!!!!!!!!!!
+        // https://fullcalendar.io/docs/event_data/eventSources/
+
+        function closeModal() {
+            $('#eventModal').modal('hide');
+        };
+        function closeEditModal() {
+            $('#editModal').modal('hide');
+        };
+        function showCancelModal() {
+            $('#cancelModal').modal('show');
+            document.getElementById('cancelBox').checked = false;
+        };
+        function closefrModal() {
+            $('#friendscripModal').modal('hide');
+        };
+        function closeCancelModal() {
+            document.getElementById('cancelBox').checked = false;
+            document.getElementById('cancelConfirm').disabled = true;
+            $('#cancelModal').modal('hide');
+        };
+        function meetingCancel(calEvent) {
+            //Friendscrip returned
+            //waitlist functionality (would list send when meeting cancelled? maybe)
+            calEvent.cancelled = true;
+            calEvent.color = 'grey';
+            alert('Meeting Cancelled')
+            $('#calendar').fullCalendar('renderEvent', calEvent, true);
+
+            $.ajax({
+                url: '../Data/CancelMeetup?MeetingID='+calEvent.id+'&cancellingUserID='+uid,
+                dataType: 'JSON',
+                type: 'GET',
+                success: function (data) {
+                }
+            });
+
+            closeCancelModal();
+        }
+
+        $(document).ready(function () {
+            $(".nav li").removeClass("active");//this will remove the active class from previous menu item
+            $('#index').addClass('active');
+
+            $('#calendar').fullCalendar({
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '../Data/GetMeetups',
+                        dataType: 'JSON',
+                        //data: {
+                        //    // our hypothetical feed requires UNIX timestamps
+                        //    start: start.unix(),
+                        //    end: end.unix()
+                        //},
+                        success: function (data) {
+                            var events = [];
+                            $.each(data, function (index, data) {
+                                console.log('index', data)
+
+                                events.push({
+                                    id: this.ID,
+                                    title: this.Title,
+                                    start: moment(this.StartTime, "MM/DD/YYYY hh:mm:ss A"),// will be parsed
+                                    offer: this.Price,
+                                    allDay: false,
+                                    cancelled: !this.Active,
+                                });
+                            });
+                            callback(events);
+                        }
+                    });
+                },
+                theme: true,
+                header: {
+                    left: 'prev, today, next',
+                    center: 'title',
+                    right: 'month, agendaWeek, agendaDay'
+                },
+
+                select: function (start, end, jsEvent, view) {
+                    //Make sure new event is in the future
+                    var currentDate = new Date($.now());
+                    var currentTime = currentDate.getTime();
+                    var dStart = new Date(start);
+                    var startTime = dStart.getTime() + 14400000; //Adjustment to calendar given value
+                    if (currentTime < startTime) {
+                        $('#eventModal').modal('show');
+                        $('#eventModal').on('shown.bs.modal', function () {
+                            $('#eventPriceOffer').focus();
+                        })
+                        $('#eventPriceOffer').val("$ ");
+                        $('#eventPriceOffer').focus();
+                        var displayStart = moment(start).format('H:mm MM/DD/YYYY');
+                        document.getElementById('modalText').innerHTML = "Confirm your meeting for " + displayStart;
+                        document.getElementById('createBtn').onclick = function () {
+                            //Need to add reference to item being sold in event!!
+                            //Add new event properties here!
+                            offerPrice = $('#eventModal #eventPriceOffer').val();
+                            var newEvent = new Object();
+                            newEvent.offer = offerPrice;
+                            newEvent.title = offerPrice; //text on event
+                            newEvent.start = start;
+                            newEvent.allDay = false;
+                            newEvent.cancelled = false;
+                            //newEvent.item = "";   Dummy link to item (taken from url and linked to database!!)
+                            $('#calendar').fullCalendar('renderEvent', newEvent, true);
+                            $('#eventModal').modal('hide');
+                        }
+                    }
+                },
+
+                eventClick: function (calEvent) {
+                    //can only cancel event 1 up to 1 hour before its start
+                    //can *claim buyer's friendscrip only within 1 hour after event end
+                    //note: Can't select cancelled (grey) event
+                    var displayStart = moment(calEvent.start).format('H:mm MM/DD/YYYY');
+                    //compare current time with end of event, only allows user to remove friendscrip within the hour after the event
+                    var eventEnd = new Date(calEvent.end);
+                    var currentDate = new Date($.now());
+                    var currentTime = currentDate.getTime();
+                    var eventEndTime = eventEnd.getTime() + 14400000;  //adjustment to calendar given value
+                    if (((currentTime - eventEndTime) <= 3600000) && ((currentTime - eventEndTime) >= 0) && (calEvent.cancelled == false)) {
+                        $('#friendscripModal').modal('show');
+                    }
+                    if (((eventEndTime - currentTime) >= 3600000) && (calEvent.cancelled == false)) {
+                        document.getElementById('aboutMeetingTime').innerHTML = "This meeting is scheduled for " + displayStart;
+                        showCancelModal();
+                        document.getElementById('cancelBox').onchange = function () {
+                            if (document.getElementById('cancelBox').checked == true) {
+                                document.getElementById('cancelConfirm').disabled = false;
+                                document.getElementById('cancelConfirm').onclick = function () {
+                                    meetingCancel(calEvent);
+                                }
+                            } else {
+                                //nothing should* happpen
+                            }
+
+                        }
+                    }
+                },
+
+                height: $(window).height() * 0.83,  //scalability of calendar
+                buttonText: {
+                    prev: 'Previous',
+                    next: 'Next',
+                },
+                eventDurationEditable: false,  //can't change event length (15 minutes firm)
+                //formats
+                columnFormat: 'dddd - M/D',
+                displayEventEnd: false,
+                timeFormat: 'h:mm',
+                forceEventDuration: true,
+                defaultTimedEventDuration: '00:15:00',
+                defaultView: 'agendaWeek',
+                selectable: true,
+                allDaySlot: false,
+                color: 'black',
+                axisFormat: 'H:mm',
+                firstHour: '17:00:00',
+                scrollTime: '16:00:00',
+                slotDuration: '00:15:00',
+            });
+            $('.fc-toolbar').find('.ui-button').addClass('btn btn-default');
+        });
+
+</script>
+    }
+    

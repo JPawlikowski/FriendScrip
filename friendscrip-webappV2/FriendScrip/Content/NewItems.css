@@ -1,0 +1,161 @@
+﻿body {
+}
+
+#tableArea {
+    width: 50%;
+}
+
+.modal-body {
+    background-color: lightgrey;
+}
+
+.modal-header {
+    text-align: center;
+    padding: 1%;
+    /*background-color: #90FF06;*/
+    background-color: #0B9444;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.modal-footer {
+    /*background-color: #90FF06;*/
+    background-color: #0B9444;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.modal-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 32px;
+}
+
+.adContent {
+    z-index:1;
+    overflow: auto;
+    font-family: 'PT Sans', sans-serif;
+    background-color: lightgrey;
+    border: solid;
+    border-color: dimgray;
+    position: absolute;
+    top: 21%;
+    width: 98%;
+    height: 45%;
+    border-radius: 3px;
+    font-size: 16px;
+    padding-top: 1.5%;
+}
+
+.itemDescrip {
+    font-family: 'PT Sans', sans-serif;
+    background-color: lightgrey;
+    border: solid;
+    border-color: dimgray;
+    position: absolute;
+    top: 78%;
+    width: 98%;
+    height: 20%;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.itemProperty {
+    font-size: 26px;
+    margin-left: 2%;
+    display: inline;
+}
+
+.itemVal {
+    font-size: 26px;
+    display: inline;
+}
+
+.aboutItem {
+    overflow: auto;
+    font-family: 'Pt Sans', sans-serif;
+    position: absolute;
+    background-color: white;
+    width: 49.5%;
+    height: 87%;
+    border: solid;
+    border-color: black;
+    top: 13%;
+    right: 5px;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+#itemNameDescrip {
+    text-decoration: underline;
+    font-size: 36px;
+    text-align: center;
+    display: block;
+}
+
+#noticeText {
+    font-style: italic;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+}
+
+.aboutItem p {
+    font-family: 'PT Sans', sans-serif;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.aboutItem b {
+    font-family: 'PT Sans', sans-serif;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.waitlist {
+    font-family: 'PT Sans', sans-serif;
+    background-color: lightgrey;
+    border: solid;
+    border-color: dimgray;
+    position: absolute;
+    top: 67%;
+    width: 98%;
+    height: 32%;
+    border-radius: 3px;
+}
+
+.btn {
+    font-family: 'PT Sans, sans-serif';
+    background-color: lightgrey;
+}
+
+    .btn:hover,
+    .btn:focus {
+        background-color: darkgrey;
+    }
+
+#itemButton {
+    padding-right: 2.5%;
+    padding-left: 2.5%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    position: absolute;
+    right: 3%;
+    top: 20%;
+    /*display:inline-block;*/
+    font-size: 17px;
+}
+
+.modalObjects {
+    width: 100%;
+    font-size: 16px;
+    padding-top: 0.25%;
+    padding-bottom: 0.25%;
+}

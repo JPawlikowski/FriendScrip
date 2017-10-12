@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ScripModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Friendscrip_Accounts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Friendscrip" Type="int" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friendscrip_Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountID" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Condition" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PickupLocation" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MainIntersection" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friendscrip_Meetups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="BuyerID" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="Price" Type="real" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Friendscrip_Items_Friendscrip_Accounts">
+          <End Role="Friendscrip_Accounts" Type="Self.Friendscrip_Accounts" Multiplicity="1" />
+          <End Role="Friendscrip_Items" Type="Self.Friendscrip_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Friendscrip_Accounts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendscrip_Items">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friendscrip_Meetups_Friendscrip_Accounts">
+          <End Role="Friendscrip_Accounts" Type="Self.Friendscrip_Accounts" Multiplicity="1" />
+          <End Role="Friendscrip_Meetups" Type="Self.Friendscrip_Meetups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Friendscrip_Accounts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendscrip_Meetups">
+              <PropertyRef Name="BuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friendscrip_Meetups_Friendscrip_Items">
+          <End Role="Friendscrip_Items" Type="Self.Friendscrip_Items" Multiplicity="1" />
+          <End Role="Friendscrip_Meetups" Type="Self.Friendscrip_Meetups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Friendscrip_Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendscrip_Meetups">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ScripModelStoreContainer">
+          <EntitySet Name="Friendscrip_Accounts" EntityType="Self.Friendscrip_Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friendscrip_Items" EntityType="Self.Friendscrip_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friendscrip_Meetups" EntityType="Self.Friendscrip_Meetups" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Friendscrip_Items_Friendscrip_Accounts" Association="Self.FK_Friendscrip_Items_Friendscrip_Accounts">
+            <End Role="Friendscrip_Accounts" EntitySet="Friendscrip_Accounts" />
+            <End Role="Friendscrip_Items" EntitySet="Friendscrip_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friendscrip_Meetups_Friendscrip_Accounts" Association="Self.FK_Friendscrip_Meetups_Friendscrip_Accounts">
+            <End Role="Friendscrip_Accounts" EntitySet="Friendscrip_Accounts" />
+            <End Role="Friendscrip_Meetups" EntitySet="Friendscrip_Meetups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friendscrip_Meetups_Friendscrip_Items" Association="Self.FK_Friendscrip_Meetups_Friendscrip_Items">
+            <End Role="Friendscrip_Items" EntitySet="Friendscrip_Items" />
+            <End Role="Friendscrip_Meetups" EntitySet="Friendscrip_Meetups" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ScripModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ScripEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Friendscrip_Accounts" EntityType="ScripModel.Friendscrip_Accounts" />
+          <EntitySet Name="Friendscrip_Items" EntityType="ScripModel.Friendscrip_Items" />
+          <AssociationSet Name="FK_Friendscrip_Items_Friendscrip_Accounts" Association="ScripModel.FK_Friendscrip_Items_Friendscrip_Accounts">
+            <End Role="Friendscrip_Accounts" EntitySet="Friendscrip_Accounts" />
+            <End Role="Friendscrip_Items" EntitySet="Friendscrip_Items" />
+          </AssociationSet>
+          <EntitySet Name="Friendscrip_Meetups" EntityType="ScripModel.Friendscrip_Meetups" />
+          <AssociationSet Name="FK_Friendscrip_Meetups_Friendscrip_Accounts" Association="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Accounts">
+            <End Role="Friendscrip_Accounts" EntitySet="Friendscrip_Accounts" />
+            <End Role="Friendscrip_Meetups" EntitySet="Friendscrip_Meetups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friendscrip_Meetups_Friendscrip_Items" Association="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Items">
+            <End Role="Friendscrip_Items" EntitySet="Friendscrip_Items" />
+            <End Role="Friendscrip_Meetups" EntitySet="Friendscrip_Meetups" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Friendscrip_Accounts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Friendscrip" Type="Int32" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Friendscrip_Items" Relationship="ScripModel.FK_Friendscrip_Items_Friendscrip_Accounts" FromRole="Friendscrip_Accounts" ToRole="Friendscrip_Items" />
+          <NavigationProperty Name="Friendscrip_Meetups" Relationship="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Accounts" FromRole="Friendscrip_Accounts" ToRole="Friendscrip_Meetups" />
+        </EntityType>
+        <EntityType Name="Friendscrip_Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Condition" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PickupLocation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MainIntersection" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Friendscrip_Accounts" Relationship="ScripModel.FK_Friendscrip_Items_Friendscrip_Accounts" FromRole="Friendscrip_Items" ToRole="Friendscrip_Accounts" />
+          <NavigationProperty Name="Friendscrip_Meetups" Relationship="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Items" FromRole="Friendscrip_Items" ToRole="Friendscrip_Meetups" />
+        </EntityType>
+        <Association Name="FK_Friendscrip_Items_Friendscrip_Accounts">
+          <End Type="ScripModel.Friendscrip_Accounts" Role="Friendscrip_Accounts" Multiplicity="1" />
+          <End Type="ScripModel.Friendscrip_Items" Role="Friendscrip_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Friendscrip_Accounts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendscrip_Items">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Friendscrip_Meetups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="BuyerID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Price" Type="Single" Nullable="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Friendscrip_Accounts" Relationship="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Accounts" FromRole="Friendscrip_Meetups" ToRole="Friendscrip_Accounts" />
+          <NavigationProperty Name="Friendscrip_Items" Relationship="ScripModel.FK_Friendscrip_Meetups_Friendscrip_Items" FromRole="Friendscrip_Meetups" ToRole="Friendscrip_Items" />
+        </EntityType>
+        <Association Name="FK_Friendscrip_Meetups_Friendscrip_Accounts">
+          <End Type="ScripModel.Friendscrip_Accounts" Role="Friendscrip_Accounts" Multiplicity="1" />
+          <End Type="ScripModel.Friendscrip_Meetups" Role="Friendscrip_Meetups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Friendscrip_Accounts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendscrip_Meetups">
+              <PropertyRef Name="BuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friendscrip_Meetups_Friendscrip_Items">
+          <End Type="ScripModel.Friendscrip_Items" Role="Friendscrip_Items" Multiplicity="1" />
+          <End Type="ScripModel.Friendscrip_Meetups" Role="Friendscrip_Meetups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Friendscrip_Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friendscrip_Meetups">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ScripModelStoreContainer" CdmEntityContainer="ScripEntities">
+          <EntitySetMapping Name="Friendscrip_Accounts">
+            <EntityTypeMapping TypeName="ScripModel.Friendscrip_Accounts">
+              <MappingFragment StoreEntitySet="Friendscrip_Accounts">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Friendscrip" ColumnName="Friendscrip" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friendscrip_Items">
+            <EntityTypeMapping TypeName="ScripModel.Friendscrip_Items">
+              <MappingFragment StoreEntitySet="Friendscrip_Items">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MainIntersection" ColumnName="MainIntersection" />
+                <ScalarProperty Name="PickupLocation" ColumnName="PickupLocation" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friendscrip_Meetups">
+            <EntityTypeMapping TypeName="ScripModel.Friendscrip_Meetups">
+              <MappingFragment StoreEntitySet="Friendscrip_Meetups">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

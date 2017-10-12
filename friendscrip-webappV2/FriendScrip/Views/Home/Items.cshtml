@@ -1,0 +1,682 @@
+﻿
+@{
+    ViewBag.Title = "Items";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Roboto+Slab" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .modal-body {
+            background-color: lightgrey;
+        }
+
+        .modal-header {
+            text-align: center;
+            padding: 1%;
+            /*background-color: #90FF06;*/
+            background-color: #0B9444;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .modal-footer {
+            /*background-color: #90FF06;*/
+            background-color: #0B9444;
+            -webkit-border-bottom-left-radius: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            -moz-border-radius-bottomright: 5px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .modal-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 32px;
+        }
+
+        .listOfItems {
+            position: absolute;
+            top: 13%;
+            left: 0.5%;
+            width: 49.5%;
+            height: 87%;
+            background-color: white;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+            .listOfItems ul {
+                margin-top: 2%;
+                padding: 0;
+                width: 100%;
+            }
+
+            .listOfItems li {
+                overflow: auto;
+                margin-top: 0.5%;
+                margin-bottom: 0.5%;
+                margin-left: 0;
+                margin-right: 0;
+                width: 103%;
+                list-style-type: none;
+                background-color: lightgrey;
+                display: inline-block;
+                height: 30%;
+                text-align: center;
+                font-size: 26px;
+                font-family: 'PT Sans', sans-serif;
+                border-radius: 2px;
+            }
+
+        .listHeader {
+            font-family: 'Roboto Slab', serif;
+            position: absolute;
+            top: 0%;
+            width: 100%;
+            height: 13%;
+            background-color: #0B9444;
+            border-radius: 2px;
+            text-align:center;
+        }
+        .listHeader h3 {
+            display:inline-block;
+            font-family: 'Roboto Slab', serif;
+            font-size: 32px;
+            text-decoration: underline;
+            /*margin-left:40%;*/
+            
+        }
+        
+        .listBody {
+            padding-right: 3%;
+            padding-top: 10%;
+        }
+
+        .adContent {
+            overflow: auto;
+            font-family: 'PT Sans', sans-serif;
+            background-color: lightgrey;
+            border: solid;
+            border-color: dimgray;
+            position: absolute;
+            top: 21%;
+            width: 98%;
+            height: 45%;
+            border-radius: 3px;
+            font-size: 16px;
+            padding-top: 1.5%;
+        }
+
+        .itemDescrip {
+            font-family: 'PT Sans', sans-serif;
+            background-color: lightgrey;
+            border: solid;
+            border-color: dimgray;
+            position: absolute;
+            top: 78%;
+            width: 98%;
+            height: 20%;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        .itemProperty {
+            font-size: 26px;
+            margin-left: 2%;
+            display: inline;
+        }
+
+        .itemVal {
+            font-size: 26px;
+            display: inline;
+        }
+
+        .aboutItem {
+            overflow: auto;
+            font-family: 'Pt Sans', sans-serif;
+            position: absolute;
+            background-color: white;
+            width: 49.5%;
+            height: 87%;
+            border: solid;
+            border-color: black;
+            top: 13%;
+            right: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        #itemNameDescrip {
+            text-decoration: underline;
+            font-size: 36px;
+            text-align: center;
+            display: block;
+        }
+
+        #noticeText {
+            font-style: italic;
+            font-size: 20px;
+            text-align: center;
+            display: block;
+        }
+
+        .aboutItem p {
+            font-family: 'PT Sans', sans-serif;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .aboutItem b {
+            font-family: 'PT Sans', sans-serif;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .waitlist {
+            font-family: 'PT Sans', sans-serif;
+            background-color: lightgrey;
+            border: solid;
+            border-color: dimgray;
+            position: absolute;
+            top: 67%;
+            width: 98%;
+            height: 32%;
+            border-radius: 3px;
+        }
+        .btn {
+            font-family: 'PT Sans, sans-serif';
+            background-color: lightgrey;
+        }
+        .btn:hover,
+        .btn:focus {
+            background-color: darkgrey;
+        }
+
+        #itemButton {
+            padding-right: 2.5%;
+            padding-left: 2.5%;
+            padding-top: 1.5%;
+            padding-bottom: 1.5%;
+            position:absolute;
+            right:3%;
+            top:20%;
+            /*display:inline-block;*/
+            font-size:17px;
+        }
+
+        .modalObjects {
+            width: 100%;
+            font-size: 16px;
+            padding-top: 0.25%;
+            padding-bottom: 0.25%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="aboutItem">
+        <h3 id="itemNameDescrip">Your Item</h3>
+        <h2 id="noticeText">Copy the below into your facebook ad!</h2>
+        
+        <div class="adContent">
+            
+            <p class="itemProperty">Condition: </p>
+            <b id="itemConditionDescrip" class="itemVal"></b>
+            <button onclick="testUrl()" style="float:right">test</button>
+            <p></p>
+            <p class="itemProperty">Nearest Intersection: </p>
+            <b id="itemMainIntersectDescrip" class="itemVal"></b>
+            <p></p>
+            <p class="itemProperty">Item Description: </p>
+            <b id="itemDescriptionShow" class="itemVal"></b>
+            <p></p>
+            <a @*href="/Home/LoginCalendar"*@ style="font-size:22px;margin-left:2%" id="calendarLink"> Click Here to Book a Time in my Calendar </a>
+        </div>
+        <div class="waitlist">
+            <h3 style="text-align:center;font-size:26px;text-decoration:underline;margin-top:0.5%" >Waitlist</h3>
+            <textarea style="min-width:98%;height:45%;margin-left:1%"></textarea>
+            <button class="btn" style="width:98%;height:25%;background-color:grey;margin-left:1%;font-size:18px">Send Waitlist Email</button>
+        </div>
+    </div>
+
+    <div class="listOfItems">
+        <div class="listHeader">
+            <h3>Items List</h3>
+            <button onclick="itemModal()" id="itemButton" class="btn" data-toggle="modal" data-target="#itemModal">Add Item</button>
+        </div>
+        <div class="listBody" id="listBody1">
+            <ul id="itemList"></ul>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="itemModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" @*onclick="closeModal()"*@ data-dismiss="modal" data-target="#itemModal">&times;</button>
+                    <h4 class="modal-title">Create Item</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="modalObjects">Enter Name of Item:</p>
+                    <input type="text" id="itemName" style="min-width:100%" />
+                    <p class="modalObjects" style="padding-top:1%;">Enter Condition: (eg. poor, good, mint)</p>
+                    <input type="text" id="itemC" style="min-width:100%" />
+                    <p class="modalObjects" style="padding-top:1%;">Enter Pickup Location:</p>
+                    <input type="text" id="location" style="min-width:100%" />
+                    <p class="modalObjects" style="padding-top:1%;">Nearest Main Intesection of Pickup Location</p>
+                    <input type="text" id="mainIntersect" style="min-width:100%" />
+                    <p class="modalObjects" style="padding-top:1%;">Enter Description of Item:</p>
+                    <textarea id="itemDescription" style="min-width:100%;height:20%"></textarea>
+                    <p> </p>
+                    <button onclick="createItem()" class="btn" style="width:100%;background-color:darkgray;font-size:16px">Create Item</button>
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="editItemModalClose()">&times;</button>
+                    <h4 class="modal-title">Edit Item</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="modalObjects">Enter Name of Item:</p>
+                    <input type="text" id="edittedItemName" style="min-width:100%" />
+                    <!--<p class="modalObjects">Enter Price of Item:</p>-->
+                    <!--<input type="text" id="itemPrice" style="width:100%" class="modalObjects"/>-->
+                    <p class="modalObjects">Enter Condition: (eg. poor,good,mint)</p>
+                    <input type="text" id="edittedItemC" style="min-width:100%" />
+                    <p class="modalObjects">Enter Pickup Location:</p>
+                    <input type="text" id="edittedLocation" style="min-width:100%" />
+                    <p class="ModalObjects">Nearest Main Intesection of Pickup Location</p>
+                    <input type="text" id="edittedMainIntersect" style="min-width:100%" />
+                    <p class="modalObjects">Enter Description of Item:</p>
+                    <textarea id="edittedItemDescription" style="min-width:100%;height:20%"></textarea>
+                    <p> </p>
+                    <button onclick="updateItem()" class="btn" id="updateItemBtn" style="width:100%;background-color:darkgrey">Create Item</button>
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+@section scripts {
+    <script type="text/javascript">
+        var uid = '@Session["ID"]';
+        $(document).ready(function () {
+            $(".nav li").removeClass("active");//this will remove the active class from previous menu item
+            $('#items').addClass('active');
+        });
+
+        //var itemTable = $("#ItemTable").DataTable({
+        //    data: [],
+        //});
+
+        /*
+        The item in the array is 1 less than the itemTrack number because array vs 1st item
+        */
+        function testUrl() {
+            var newAccountObject = {
+                ID: uid,
+                Name: name,
+                //Email: email,
+                //Friendscrip: 10,
+                //IsAdmin: false,
+            };
+            //alert(name + " - " + " - " + uid);
+            window.location = "/Home/LoginCalendar/" + uid;
+        }
+
+        function itemModal() {
+            //$('#itemModal').modal('show');
+            $('#itemModal').on('shown.bs.modal', function () {
+                $('#itemName').focus();
+            })
+        }
+        function closeModal() {
+            $('#itemModal').modal('hide');
+        }
+        function editItemModal() {
+            $('#editModal').modal('show');
+            $('#editModal').on('shown.bs.modal', function () {
+                $('#edittedItemName').focus();
+            })
+        }
+        function editItemModalClose() {
+            $('#editModal').modal('hide');
+        }
+
+        //variables used to track items
+        var itemTrackId = 0;
+        var itemTrackInfo = [];
+        var itemToUpdate = 0;
+        var itemAd = 0;
+        function createItem() {
+            //create new Li (list item) set its id, create edit and sold button
+            var newLi = document.createElement('li');
+            window.itemTrackId = window.itemTrackId + 1;
+            var newItemId = window.itemTrackId.toString();
+            var editBtn = document.createElement("Button");
+            editBtn.innerHTML = "Edit";
+            var editBtnId = "editBtn" + newItemId; //id of edit btn ("newItemId" identifies it to its item)
+            editBtn.setAttribute('id', editBtnId);
+            editBtn.setAttribute('class', 'btn itemButton'); //class of edit button
+            var delBtn = document.createElement("Button");
+            delBtn.innerHTML = "Mark as Sold";
+            var delBtnId = "delBtn" + newItemId; //id of sold btn ("newItemId" identifies it to its item)
+            delBtn.setAttribute('id', delBtnId);
+            delBtn.setAttribute('class', 'btn itemButton');  //class of sold button
+            newLi.appendChild(delBtn);
+            newLi.appendChild(editBtn);
+            newLi.setAttribute('id', newItemId);
+            newLi.setAttribute('class', 'itemsList');
+
+            //get properties of item from modal textboxes
+            var itemName = document.getElementById("itemName").value;
+            var itemC = document.getElementById("itemC").value;
+            var itemLocation = document.getElementById("location").value;
+            var itemMainIntersect = document.getElementById("mainIntersect").value;
+            var itemD = document.getElementById("itemDescription").value;
+            //var thisItem = [itemName, itemPrice, itemC, itemLocation, itemMainIntersect, itemD];
+            //each item is represented as array of its properties
+            var thisItem = [itemName, itemC, itemLocation, itemMainIntersect, itemD];
+
+            //call function to add item to database
+            // returns a boolean indicating the result of the database add
+            var itemAddedSuccessfully = addItemToDatabase(thisItem); // if true: success. if false: failed.
+
+            window.itemTrackInfo.push(thisItem);
+
+            // this does not need to be here anymore, replace with "tableName.rows.add(newItem)" ... New Item should be in FriendScrip_Item format
+            document.getElementById('itemList').appendChild(newLi);
+
+            //styles for buttons
+            newLi.innerHTML = newLi.innerHTML + itemName;
+            document.getElementById(editBtnId).style.float = "right";
+            document.getElementById(delBtnId).style.float = "left";
+            document.getElementById(editBtnId).style.fontSize = "16px";
+            document.getElementById(delBtnId).style.fontSize = "16px";
+            document.getElementById(delBtnId).style.height = "42px";
+            document.getElementById(editBtnId).style.height = "42px";
+            document.getElementById(delBtnId).style.paddingTop = '5px';
+            document.getElementById(editBtnId).style.paddingTop = '5px';
+            document.getElementById(delBtnId).style.paddingRight = '5px';
+            document.getElementById(editBtnId).style.paddingRight = '5px';
+            document.getElementById(delBtnId).style.backgroundColor = 'grey';
+            document.getElementById(editBtnId).style.backgroundColor = 'grey';
+            document.getElementById(delBtnId).style.padding = '1%';
+            document.getElementById(editBtnId).style.padding = '1%';
+            document.getElementById(delBtnId).style.width = '15%';
+            document.getElementById(editBtnId).style.width = '15%';
+            //functionality of buttons
+            document.getElementById(window.itemTrackId).addEventListener('click', itemDescrip);
+            document.getElementById(editBtnId).addEventListener('click', editItem);
+            document.getElementById(delBtnId).addEventListener('click', itemRemove);
+
+            //clear modal
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemC').value = '';
+            document.getElementById('location').value = '';
+            document.getElementById('mainIntersect').value = '';
+            document.getElementById('itemDescription').value = '';
+
+            //Focus on newly created item (same as itemDescrip function - like onlick on item)
+            var allItems = document.getElementsByClassName("itemsList");
+            for (var i = 0; i < allItems.length; i++) {
+                allItems[i].style.backgroundColor = 'lightgrey';
+            }
+            var allButtons = document.getElementsByClassName('itemButton');
+            for (var x = 0; x < allButtons.length; x++) {
+                allButtons[x].style.backgroundColor = 'grey';
+            }
+
+            document.getElementById(editBtnId).style.backgroundColor = 'forestgreen';
+            document.getElementById(delBtnId).style.backgroundColor = 'forestgreen';
+            document.getElementById(newItemId).style.backgroundColor = '#0B9444';
+
+            var name = window.itemTrackInfo[newItemId - 1][0];
+            var condition = window.itemTrackInfo[newItemId - 1][1];
+            var mainIntersection = window.itemTrackInfo[newItemId - 1][3];
+            var description = window.itemTrackInfo[newItemId - 1][4];
+            document.getElementById("itemNameDescrip").innerHTML = name;
+            document.getElementById("itemConditionDescrip").innerHTML = condition;
+            document.getElementById('itemMainIntersectDescrip').innerHTML = mainIntersection;
+            document.getElementById("itemDescriptionShow").innerHTML = description;
+
+            var newAccountObject = {
+                ID: uid,
+                Name: name,
+                //Email: email,
+                //Friendscrip: 10,
+                //IsAdmin: false,
+            };
+            //alert(name + " - " + " - " + uid);
+            document.getElementById('calendarLink').innerHTML = 'localhost:1802/Home/LoginCalendar/' + uid;
+            
+
+            $('#itemModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        }
+
+        function itemRemove(event) {
+            var btnId = event.target.id;
+            var k = parseInt(btnId.substr(6));
+            delete window.itemTrackInfo[k - 1];
+            var elem = document.getElementById(k);
+            elem.parentNode.removeChild(elem);
+        }
+
+        function editItem(event) {
+            editItemModal();
+            //get identifier of button, num corresponds with id of item
+            //display the edit modal with values corresponding to selected item
+            var buttonId = event.target.id;
+            var num = parseInt(buttonId.substr(7));
+            var oldItemName = window.itemTrackInfo[num - 1][0];
+            var oldItemCondition = window.itemTrackInfo[num - 1][1];
+            var oldLocation = window.itemTrackInfo[num - 1][2];
+            var oldMainIntersect = window.itemTrackInfo[num - 1][3];
+            var oldItemDescription = window.itemTrackInfo[num - 1][4];
+            document.getElementById('edittedItemName').value = oldItemName;
+            document.getElementById('edittedItemC').value = oldItemCondition;
+            document.getElementById('edittedLocation').value = oldLocation;
+            document.getElementById('edittedMainIntersect').value = oldMainIntersect;
+            document.getElementById('edittedItemDescription').value = oldItemDescription;
+            window.itemToUpdate = num;
+            document.getElementById('updateItemBtn').addEventListener('click', updateItem);
+        }
+
+        function updateItem() {
+            //update properties of item from edit modal text boxes
+            var newItemName = document.getElementById('edittedItemName').value;
+            var newItemCondition = document.getElementById('edittedItemC').value;
+            var newLocation = document.getElementById('edittedLocation').value;
+            var newMainIntersect = document.getElementById('edittedMainIntersect').value;
+            var newItemDescription = document.getElementById('edittedItemDescription').value;
+
+            var updatedItemObject = {
+                AccountId: uid,
+                ID: 1, //TODO: Change this so that it uses the current item ID!
+                ItemName: newItemName,
+                Condition: newItemCondition,
+                PickupLocation: newLocation,
+                MainIntersection: newMainIntersect,
+                Description: newItemDescription,
+            };
+
+            updateItemInDatabase(updatedItemObject);
+
+            var num = window.itemToUpdate;
+            window.itemTrackInfo[num - 1][0] = newItemName;
+            window.itemTrackInfo[num - 1][1] = newItemCondition;
+            window.itemTrackInfo[num - 1][2] = newLocation;
+            window.itemTrackInfo[num - 1][3] = newMainIntersect;
+            window.itemTrackInfo[num - 1][4] = newItemDescription;
+            document.getElementById(num).textContent = newItemName;
+
+            //re-create item in list (similar to creating new item)
+            var editBtn = document.createElement("Button");
+            editBtn.innerHTML = "Edit";
+            var editBtnId = "editBtn" + num; //id's of list item and button match'
+            editBtn.setAttribute('id', editBtnId);
+            editBtn.setAttribute('class', 'btn itemButton');
+            var delBtn = document.createElement("Button");
+            delBtn.innerHTML = "Mark as Sold";
+            var delBtnId = "delBtn" + num;
+            delBtn.setAttribute('id', delBtnId);
+            delBtn.setAttribute('class', 'btn itemButton');
+            document.getElementById(num).appendChild(delBtn);
+            document.getElementById(num).appendChild(editBtn);
+            document.getElementById(editBtnId).style.float = "right";
+            document.getElementById(delBtnId).style.float = "left";
+            document.getElementById(editBtnId).style.fontSize = "16px";
+            document.getElementById(delBtnId).style.fontSize = "16px"
+            document.getElementById(delBtnId).style.height = "42px";
+            document.getElementById(editBtnId).style.height = "42px";
+            document.getElementById(delBtnId).style.paddingTop = '5px';
+            document.getElementById(editBtnId).style.paddingTop = '5px';
+            document.getElementById(delBtnId).style.paddingRight = '5px';
+            document.getElementById(editBtnId).style.paddingRight = '5px';
+            document.getElementById(delBtnId).style.backgroundColor = 'grey';
+            document.getElementById(editBtnId).style.backgroundColor = 'grey';
+            document.getElementById(delBtnId).style.padding = '1%';
+            document.getElementById(editBtnId).style.padding = '1%';
+            document.getElementById(delBtnId).style.width = '15%';
+            document.getElementById(editBtnId).style.width = '15%';
+            document.getElementById(editBtnId).addEventListener('click', editItem);
+            document.getElementById(delBtnId).addEventListener('click', itemRemove);
+
+            //moving focus to newly created item (similar to itemDescrip function - onclick for item)
+            var allItems = document.getElementsByClassName("itemsList");
+            for (var i = 0; i < allItems.length; i++) {
+                allItems[i].style.backgroundColor = 'lightgrey';
+            }
+            var allButtons = document.getElementsByClassName('itemButton');
+            for (var x = 0; x < allButtons.length; x++) {
+                allButtons[x].style.backgroundColor = 'grey';
+            }
+
+            document.getElementById(editBtnId).style.backgroundColor = 'forestgreen';
+            document.getElementById(delBtnId).style.backgroundColor = 'forestgreen';
+            document.getElementById(num).style.backgroundColor = '#0B9444';
+
+            var name = window.itemTrackInfo[num - 1][0];
+            var condition = window.itemTrackInfo[num - 1][1];
+            var mainIntersection = window.itemTrackInfo[num - 1][3];
+            var description = window.itemTrackInfo[num - 1][4];
+            document.getElementById("itemNameDescrip").innerHTML = name;
+            document.getElementById("itemConditionDescrip").innerHTML = condition;
+            document.getElementById('itemMainIntersectDescrip').innerHTML = mainIntersection;
+            document.getElementById("itemDescriptionShow").innerHTML = description;
+            editItemModalClose();
+        }
+
+        function itemDescrip(event) {
+            //based on selected item, display its properties in adContent
+            //Make selected item green and others grey
+            if (this == event.target) {
+                var thisItemId = parseInt(event.target.id);
+                var allItems = document.getElementsByClassName("itemsList");
+                for (var i = 0; i < allItems.length; i++) {
+                    allItems[i].style.backgroundColor = 'lightgrey';
+                }
+                var allButtons = document.getElementsByClassName('itemButton');
+                for (var x = 0; x < allButtons.length; x++) {
+                    allButtons[x].style.backgroundColor = 'grey';
+                }
+                var editBtnId = 'editBtn' + thisItemId;
+                var delBtnId = 'delBtn' + thisItemId;
+                document.getElementById(editBtnId).style.backgroundColor = 'forestgreen';
+                document.getElementById(delBtnId).style.backgroundColor = 'forestgreen';
+                document.getElementById(thisItemId).style.backgroundColor = '#0B9444';
+                var itemName = window.itemTrackInfo[thisItemId - 1][0];
+                var itemC = window.itemTrackInfo[thisItemId - 1][1];
+                var itemLocation = window.itemTrackInfo[thisItemId - 1][2];
+                var mainIntersect = window.itemTrackInfo[thisItemId - 1][3];
+                var itemDescrip = window.itemTrackInfo[thisItemId - 1][4];
+                document.getElementById("itemNameDescrip").innerHTML = itemName;
+                document.getElementById("itemConditionDescrip").innerHTML = itemC;
+                document.getElementById('itemMainIntersectDescrip').innerHTML = mainIntersect;
+                document.getElementById("itemDescriptionShow").innerHTML = itemDescrip;
+            }
+        }
+
+        function addItemToDatabase(newItem) {
+            alert("hello?");
+            //[itemName, itemPrice, itemC, itemLocation, itemMainIntersect, itemD]
+            var newItemObject = {
+                AccountId: uid,
+                ItemName: newItem[0],
+                Condition: newItem[1],
+                PickupLocation: newItem[2],
+                MainIntersection: newItem[3],
+                Description: newItem[4],
+            };
+
+            $.ajax({
+                url: '../Data/AddNewItem'/*?test=FUCK*/,
+                //contentType: "application/json",
+                dataType: "json",
+                type: "POST",
+                data: { 'newItem': newItemObject },
+            }).done(function (data) {
+                if (data != "Failure") {
+                    //tableName.rows.add(data);
+                    //tableName.draw();
+                    return true;
+                }
+                alert("Rib Fam");
+                return false;
+            });
+        }
+
+        function updateItemInDatabase(updatedItem) {
+            $.ajax({
+                url: '../Data/EditItem'/*?test=FUCK*/,
+                //contentType: "application/json",
+                dataType: "json",
+                type: "POST",
+                data: { 'newItem': updatedItem },
+            }).done(function (data) {
+                if (data != "Failure") {
+                    //tableName.rows.add(data);
+                    //tableName.draw();
+                    return true;
+                }
+                alert("Rib Fam");
+                return false;
+            });
+        }
+    </script>
+}
