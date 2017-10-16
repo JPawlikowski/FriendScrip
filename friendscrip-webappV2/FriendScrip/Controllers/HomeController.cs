@@ -45,7 +45,6 @@ namespace Friendscrip.Controllers
                         var meetupForItem = item.Friendscrip_Meetups.Where(x => x.Active).FirstOrDefault();
 
                         if (meetupForItem == null) { continue; }
-                        // convert to different type, fuck circular references famZ
                         scheduledMeetups.Add(new Meetups
                         {
                             ID = meetupForItem.ID,
