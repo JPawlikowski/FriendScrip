@@ -21,11 +21,11 @@ namespace FriendScrip.Controllers
             string reciever = "amella2008@hotmail.com";
             string sender = "anthonymella@northfieldsoftware.ca";
             string buyerName = "tony";
-            string date = "Fuck o clock";
+            string date = "time";
             string price = "40";
-            string time = "When the erection PEAKS";
-            string address = "suck my fucking rifle";
-            string meetupTime = "Liquid erection rabies";
+            string time = "When things happen";
+            string address = "main st";
+            string meetupTime = "sometime";
 
 
 
@@ -68,7 +68,6 @@ namespace FriendScrip.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        // THE MEETINGTIME VARIABLE IS SKETCHY, WE NEED A WAY TO MERGE THE TIME AND DATE
         public JsonResult AcceptEmail(string sellerEmail, string buyerEmail, string address, string meetupTime)
         {
             MailMessage message = new MailMessage(sellerEmail, buyerEmail);
